@@ -15,7 +15,10 @@ const peer = ExpressPeerServer(server , {
 app.use('/peerjs', peer);
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
-app.get('/' , allocate);
+app.get('/',(req, res) => {
+  res.json({error: "welcome go to /start"})
+})
+app.get('/start' , allocate);
 app.get('*',(req, res) => {
   res.json({error: "no such route was found!!!"})
 })
