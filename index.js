@@ -15,7 +15,10 @@ const peer = ExpressPeerServer(server , {
 app.use('/peerjs', peer);
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
-app.get('/' , async(req, res) => {
+app.get('/' , (req, res) => {
+  return res.json({ message: "visit /start" })
+});
+app.get('/start' , async(req, res) => {
   data = await allocate();
   return res.render('index' , { RoomId: data })
 });
