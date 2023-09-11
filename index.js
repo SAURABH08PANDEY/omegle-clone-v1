@@ -15,11 +15,8 @@ const peer = ExpressPeerServer(server , {
 app.use('/peerjs', peer);
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
-app.get('/',(req, res) => {
-  res.json({error: "welcome go to /start"})
-})
-app.get('/start' , (req, res) => {
-  data = allocate();
+app.get('/' , async(req, res) => {
+  data = await allocate();
   return res.render('index' , { RoomId: data })
 });
 app.get('*',(req, res) => {
@@ -27,9 +24,11 @@ app.get('*',(req, res) => {
 })
 io.on("connection" , (socket)=>{
   socket.on('newUser' , (id , room)=>{
+    console.log(room, '-----------------------');
     socket.join(room);
     socket.to(room).broadcast.emit('userJoined' , id);
     socket.on('disconnect' , ()=>{
+      console.log(room);
         deallocate(room);
         socket.to(room).broadcast.emit('userDisconnect' , id);
     })
