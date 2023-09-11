@@ -1,5 +1,6 @@
 const connectDB = require('./db/connectDB');
 const express = require('express');
+const path = require('path');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -14,11 +15,9 @@ const peer = ExpressPeerServer(server , {
 
 app.use('/peerjs', peer);
 app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'))
-app.get('/' , (req, res) => {
-  return res.json({ message: "visit /start" })
-});
-app.get('/start' , async(req, res) => {
+app.get('/' , async(req, res) => {
   data = await allocate();
   return res.render('index' , { RoomId: data })
 });
