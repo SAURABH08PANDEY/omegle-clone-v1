@@ -7,7 +7,7 @@ const allocate = async(req, res) => {
         vacantRoom.allowedCount += 1;
         vacantRoom.vacant = vacantRoom.allowedCount < 2 ? true : false;
         vacantRoom = await vacantRoom.save();
-        return res.render('index' , {RoomId: vacantRoom.roomId});
+        return vacantRoom.roomId;
     }
     const roomId = uuidv4();
     const allowedCount = 1;
@@ -18,7 +18,7 @@ const allocate = async(req, res) => {
         allowedCount,
         vacant, 
     });
-    return res.render('index' , {RoomId: vacantRoom.roomId});
+    return vacantRoom.roomId;
 }
 
 const deallocate = async(roomId) => {
