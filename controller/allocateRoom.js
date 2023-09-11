@@ -18,11 +18,13 @@ const allocate = async(req, res) => {
         allowedCount,
         vacant, 
     });
+    console.log(vacantRoom.roomId);
     return vacantRoom.roomId;
 }
 
 const deallocate = async(roomId) => {
     let exisitingRoom = await Room.findOne({ roomId });
+    console.log(roomId, exisitingRoom);
     exisitingRoom.allowedCount -= 1;
     exisitingRoom.vacant = exisitingRoom.allowedCount < 2 ? true : false;
     exisitingRoom = await exisitingRoom.save();
