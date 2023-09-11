@@ -18,7 +18,10 @@ app.use(express.static('public'))
 app.get('/',(req, res) => {
   res.json({error: "welcome go to /start"})
 })
-app.get('/start' , allocate);
+app.get('/start' , (req, res) => {
+  data = allocate();
+  return res.render('index' , { RoomId: data })
+});
 app.get('*',(req, res) => {
   res.json({error: "no such route was found!!!"})
 })
